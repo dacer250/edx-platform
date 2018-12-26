@@ -38,7 +38,6 @@ from .production import *  # pylint: disable=wildcard-import, unused-wildcard-im
 # Redirect to the test_root folder within the repo
 GITHUB_REPO_ROOT = (TEST_ROOT / "data").abspath()
 LOG_DIR = (TEST_ROOT / "log").abspath()
-
 # Configure modulestore to use the test folder within the repo
 update_module_store_settings(
     MODULESTORE,
@@ -198,6 +197,20 @@ FEATURES['ENABLE_DISCUSSION_HOME_PANEL'] = True
 
 # Enable support for OpenBadges accomplishments
 FEATURES['ENABLE_OPENBADGES'] = True
+FEATURES['ENABLE_LTI_PROVIDER'] = True
+
+FEATURES['ENABLE_THIRD_PARTY_AUTH'] = True
+THIRD_PARTY_AUTH = {
+    "Google": {
+        "SOCIAL_AUTH_GOOGLE_OAUTH2_KEY": "test",
+        "SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET": "test"
+    },
+    "Facebook": {
+        "SOCIAL_AUTH_FACEBOOK_KEY": "test",
+        "SOCIAL_AUTH_FACEBOOK_SECRET": "test"
+    }
+}
+
 
 # Use MockSearchEngine as the search engine for test scenario
 SEARCH_ENGINE = "search.tests.mock_search_engine.MockSearchEngine"
@@ -234,13 +247,13 @@ BADGING_BACKEND = 'lms.djangoapps.badges.backends.tests.dummy_backend.DummyBacke
 ECOMMERCE_API_URL = 'http://localhost:8043/api/v2/'
 
 LMS_ROOT_URL = "http://localhost:8000"
+
 if RELEASE_LINE == "master":
     # On master, acceptance tests use edX books, not the default Open edX books.
     HELP_TOKENS_BOOKS = {
         'learner': 'https://edx.readthedocs.io/projects/edx-guide-for-students',
         'course_author': 'https://edx.readthedocs.io/projects/edx-partner-course-staff',
     }
-
 WAFFLE_OVERRIDE = True
 
 ############## Settings for Completion API #########################
