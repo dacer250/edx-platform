@@ -6,7 +6,7 @@ import logging
 import urllib
 from collections import OrderedDict, namedtuple
 from datetime import datetime
-
+import bleach
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser, User
@@ -1448,7 +1448,7 @@ def render_xblock(request, usage_key_string, check_if_enrolled=True):
     usage_key = usage_key.replace(course_key=modulestore().fill_in_run(usage_key.course_key))
     course_key = usage_key.course_key
 
-    requested_view = request.GET.get('view', 'student_view')
+    requested_view = bleach.clean(request.GET.get('view', 'student_view'))
     if requested_view != 'student_view':
         return HttpResponseBadRequest("Rendering of the xblock view '{}' is not supported.".format(requested_view))
 
